@@ -113,13 +113,13 @@ for repo in repos:
 
             commits = []
 
-            for line in log_split:
-                if '||||||||' in line: continue
-                if '||||||||||||' in line: continue
-                if '||||||||||||||||' in line: continue
-                if '||||||||||||||||||||' in line: continue
+            for i in range(1,len(log_split)):
+                if '||||||||' in log_split[i]: continue
+                if '||||||||||||' in log_split[i]: continue
+                if '||||||||||||||||' in log_split[i]: continue
+                if '||||||||||||||||||||' in log_split[i]: continue
 
-                commit_line = line_re.search(line).groups()
+                commit_line = line_re.search(log_split[i]).groups()
 
                 commits.append({
                     'name': commit_line[0],
