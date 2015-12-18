@@ -81,6 +81,8 @@ for repo in repos:
         since = dotgitdummy.read()
         dotgitdummy.close()
 
+    commits = []
+
     for targetrepo in repo['target_repo']:
 
         os.chdir(targetrepo) # switch back to the target repo
@@ -110,8 +112,6 @@ for repo in repos:
         if (len(log_split) > 1):
 
             line_re = re.compile(r'^(.+)(?:\|\|\|\|)(.+)(?:\|\|\|\|)(.+)(?:\|\|\|\|)(.+)(?:\|\|\|\|)(.+)', re.DOTALL)
-
-            commits = []
 
             for i in range(1,len(log_split)):
                 if '||||||||' in log_split[i]: continue
@@ -167,6 +167,7 @@ for repo in repos:
                     subprocess.call([
                         'git',
                         'add',
+                        '--',
                         commit['filename']+repo['dummy_ext']
                     ])
                     dotgitdummy = open(repo['dummy_repo'] + os.path.sep + '.gitdummy', 'w+')
@@ -175,6 +176,7 @@ for repo in repos:
                     subprocess.call([
                         'git',
                         'add',
+                        '--',
                         repo['dummy_repo'] + os.path.sep + '.gitdummy'
                     ])
                     os.environ['GIT_COMMITTER_DATE'] = commit['date']
